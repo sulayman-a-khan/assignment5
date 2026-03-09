@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GitHub Issues Tracker</title>
+    <!-- daisy and tailwind cdn  -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body>
+    <section class="flex justify-center items-center min-h-screen">
+      <main class="w-[520px] h-[743px] p-[32px] mx-0 shadow-2xl">
+        <div class="text-center">
+          <img class="mx-auto" src="/assets/github-logo.png" alt="" />
+          <h1 class="text-2xl font-semibold">GitHub Issues Tracker</h1>
+          <p class="font-thin text-gray-500">Signin to manage your issues</p>
+        </div>
+
+        <!-- input form  -->
+
+        <div class="max-w-md mx-auto py-[24px] space-y-4">
+          <!-- Username -->
+          <div>
+            <label class="mb-2 font-semibold">Username</label>
+            <input
+              id="username"
+              type="text"
+              placeholder="Enter your username"
+              class="w-full border border-black-300 rounded-md p-3"
+            />
+            <p class="text-sm text-blue-700 mt-1">Default: admin</p>
+          </div>
+
+          <!-- Password -->
+          <div>
+            <label class="mb-2 font-semibold">Password</label>
+            <input
+              id="password"
+              type="password"
+              placeholder="Enter your password"
+              class="w-full border border-black-300 rounded-md p-3"
+            />
+            <p class="text-sm text-blue-700 mt-1">Default: admin123</p>
+          </div>
+        </div>
+
+        <!-- signin button -->
+
+        <button id="loginBtn" class="btn btn-primary w-full rounded-md">
+          Sign In
+        </button>
+
+        <!-- OR line -->
+        <p class="text-center my-7">
+          --------------------- OR --------------------
+        </p>
+
+        <!-- demo credential -->
+        <p class="text-center font-thin text-sm">Demo Credentials:</p>
+        <div class="py-7">
+          <h1 class="text-center">
+            <span class="font-semibold">Username:</span> admin
+          </h1>
+          <h1 class="text-center">
+            <span class="font-semibold">Password:</span> admin123
+          </h1>
+        </div>
+      </main>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>
