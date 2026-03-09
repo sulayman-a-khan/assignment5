@@ -154,7 +154,6 @@ async function showDetails(id) {
   const modal = document.getElementById("issue_modal");
   const content = document.getElementById("modal-content");
 
-  // লোডিং অবস্থায় মোডালটি খোলা
   content.innerHTML = `
         <div class="flex justify-center items-center py-20">
             <span class="loading loading-spinner loading-lg text-primary"></span>
@@ -163,13 +162,36 @@ async function showDetails(id) {
   modal.showModal();
 
   try {
-    const res = await fetch(
-      `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`,
-    );
+    const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`);
     const result = await res.json();
-    const data = result.data || result; // API ডাটা ফরম্যাট অনুযায়ী নেওয়া
+    const data = result.data || result;
 
-    // আপনার ইমেজের ডিজাইন অনুযায়ী HTML স্ট্রাকচার
+    // Matching color logic from your displayIssues function
+    const labelsHtml = data.labels && data.labels.length > 0 
+      ? data.labels.map(label => {
+          let colorClass = "bg-gray-100 text-gray-700 border-gray-200"; // default
+
+          const lowerLabel = label.toLowerCase();
+          if (lowerLabel === "bug") {
+            colorClass = "bg-red-100 text-red-500 border-red-200";
+          } else if (lowerLabel === "help wanted") {
+            colorClass = "bg-yellow-100 text-yellow-600 border-yellow-200";
+          } else if (lowerLabel === "enhancement") {
+            colorClass = "bg-green-100 text-green-600 border-green-200";
+          } else if (lowerLabel === "documentation") {
+            colorClass = "bg-blue-100 text-blue-600 border-blue-200";
+          } else if (lowerLabel === "good first issue") {
+            colorClass = "bg-purple-100 text-purple-600 border-purple-200";
+          }
+
+          return `
+            <span class="flex items-center gap-1 border ${colorClass} px-3 py-1 rounded-full text-xs font-bold uppercase">
+                ${label}
+            </span>
+          `;
+        }).join('')
+      : '<span class="text-gray-400 text-xs italic">No labels</span>';
+
     content.innerHTML = `
             <h1 class="text-3xl font-bold text-gray-800 mb-4">${data.title}</h1>
 
@@ -179,41 +201,34 @@ async function showDetails(id) {
             </div>
 
             <div class="flex gap-2 mb-8">
-                <span class="flex items-center gap-1 border border-red-200 text-red-500 bg-red-50 px-3 py-1 rounded-full text-xs font-bold">
-                    BUG
-                </span>
-                <span class="flex items-center gap-1 border border-orange-200 text-orange-500 bg-orange-50 px-3 py-1 rounded-full text-xs font-bold">
-                    HELP WANTED
-                </span>
+                ${labelsHtml}
             </div>
 
             <div class="text-gray-600 text-lg leading-relaxed mb-10">
-                ${data.description}
+                ${data.description || "No description provided."}
             </div>
 
             <div class="grid grid-cols-2 bg-gray-50 p-6 rounded-xl border border-gray-100 mb-6">
                 <div>
                     <p class="text-gray-400 text-sm mb-1">Assignee:</p>
-                    <p class="font-bold text-lg text-gray-800">${data.author}</p>
+                    <p class="font-bold text-lg text-gray-800">${data.author || "Unassigned"}</p>
                 </div>
                 <div>
                     <p class="text-gray-400 text-sm mb-1">Priority:</p>
                     <span class="bg-red-500 text-white px-4 py-1 rounded-lg text-sm font-bold uppercase">
-                        ${data.priority}
+                        ${data.priority || "Medium"}
                     </span>
                 </div>
             </div>
         `;
 
-    // ক্লোজ বাটনটি মোডালের ডানে নিচে রাখার জন্য এই অংশটি
     const modalBox = document.querySelector(".modal-box");
-    modalBox.className = "modal-box w-11/12 max-w-4xl p-10 rounded-2xl"; // মোডাল একটু বড় এবং সুন্দর করার জন্য
+    modalBox.className = "modal-box w-11/12 max-w-4xl p-10 rounded-2xl"; 
   } catch (error) {
     console.error("মোডাল ডাটা লোড এরর:", error);
-    content.innerHTML = `<p class="text-center text-red-500 py-10">দুঃখিত, তথ্য লোড করা যায়নি।</p>`;
+    content.innerHTML = `<p class="text-center text-red-500 py-10">দুঃখিত, তথ্য লোড করা যায়নি।</p>`;
   }
 }
-
 // পেজ লোড হলে ফাংশনটি চালু হবে
 loadIssues();
 
