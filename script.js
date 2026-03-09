@@ -12,17 +12,15 @@ if (loginBtn) {
   });
 }
 
-// সব ইস্যু ডাটা রাখার জন্য গ্লোবাল ভেরিয়েবল
+
 let allIssues = [];
 
-/**
- * ১. API থেকে সব ডাটা লোড করার ফাংশন
- */
+
 async function loadIssues() {
   const loader = document.getElementById("loader");
   const container = document.getElementById("issue-container");
 
-  // লোডার দেখানো এবং কন্টেইনার খালি করা
+  
   loader.classList.remove("hidden");
   container.innerHTML = "";
 
@@ -32,11 +30,9 @@ async function loadIssues() {
     );
     const result = await res.json();
 
-    // চেক করা হচ্ছে ডাটা কি সরাসরি অ্যারে নাকি অবজেক্টের ভেতর
-    // যদি result.data থাকে তবে সেটা নিবে, নাহলে সরাসরি result নিবে
     allIssues = result.data || result;
 
-    // যদি ডাটা না আসে তবে কনসোলে চেক করুন
+   
     console.log("Fetched Data:", allIssues);
 
     if (Array.isArray(allIssues)) {
@@ -52,9 +48,7 @@ async function loadIssues() {
   }
 }
 
-/**
- * ২. স্ক্রিনে কার্ডগুলো দেখানোর ফাংশন
- */
+
 function displayIssues(issues) {
   const container = document.getElementById("issue-container");
   const issueCount = document.getElementById("issue-count");
@@ -68,7 +62,7 @@ function displayIssues(issues) {
 
   container.innerHTML = issues
     .map((issue) => {
-      // স্ট্যাটাস অনুযায়ী বর্ডার কালার
+ 
       const topBorder =
         issue.status?.toLowerCase() === "open"
           ? "border-t-green-500"
@@ -99,7 +93,7 @@ function displayIssues(issues) {
             <div class="flex gap-2 mb-4"> 
   ${issue.labels
     .map((label) => {
-      let colorClass = "bg-gray-100 text-gray-700"; // default color
+      let colorClass = "bg-gray-100 text-gray-700"; 
 
       if (label.toLowerCase() === "bug") {
         colorClass = "bg-red-100 text-red-500";
@@ -128,7 +122,7 @@ function displayIssues(issues) {
     .join("");
 }
 
-// ৩. ফিল্টার ফাংশন (আগের মতোই থাকবে)
+
 function filterIssues(status) {
   const buttons = document.querySelectorAll(".tab-btn");
   buttons.forEach((btn) => btn.classList.remove("btn-primary"));
@@ -146,10 +140,7 @@ function filterIssues(status) {
   }
 }
 
-// ৪. ডিটেইলস মোডাল
-/**
- * ৪. মোডাল-এ ডিটেইলস দেখানোর আপডেট করা ফাংশন
- */
+
 async function showDetails(id) {
   const modal = document.getElementById("issue_modal");
   const content = document.getElementById("modal-content");
@@ -166,10 +157,9 @@ async function showDetails(id) {
     const result = await res.json();
     const data = result.data || result;
 
-    // Matching color logic from your displayIssues function
     const labelsHtml = data.labels && data.labels.length > 0 
       ? data.labels.map(label => {
-          let colorClass = "bg-gray-100 text-gray-700 border-gray-200"; // default
+          let colorClass = "bg-gray-100 text-gray-700 border-gray-200"; 
 
           const lowerLabel = label.toLowerCase();
           if (lowerLabel === "bug") {
@@ -229,40 +219,38 @@ async function showDetails(id) {
     content.innerHTML = `<p class="text-center text-red-500 py-10">দুঃখিত, তথ্য লোড করা যায়নি।</p>`;
   }
 }
-// পেজ লোড হলে ফাংশনটি চালু হবে
+
 loadIssues();
 
-/**
- * সার্চ হ্যান্ডেল করার ফাংশন
- */
+
 async function handleSearch() {
   const searchInput = document.getElementById("search-input");
-  const searchText = searchInput.value.trim(); // ইনপুট থেকে টেক্সট নেওয়া
+  const searchText = searchInput.value.trim(); 
   const container = document.getElementById("issue-container");
   const loader = document.getElementById("loader");
 
-  // যদি সার্চ বক্স খালি থাকে, তবে সব ডাটা আবার লোড করবে
+  
   if (searchText === "") {
     loadIssues();
     return;
   }
 
-  // লোডার দেখানো
+  
   loader.classList.remove("hidden");
   container.innerHTML = "";
 
   try {
-    // আপনার দেওয়া সার্চ API এন্ডপয়েন্ট কল করা
+    
     const res = await fetch(
       `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchText}`,
     );
     const result = await res.json();
 
-    // ডাটা ফরম্যাট চেক (result.data অথবা সরাসরি result)
+  
     const searchData = result.data || result;
 
     if (Array.isArray(searchData) && searchData.length > 0) {
-      displayIssues(searchData); // পাওয়া গেলে স্ক্রিনে দেখানো
+      displayIssues(searchData);
     } else {
       document.getElementById("issue-count").innerText = "0 Issues";
       container.innerHTML = `
@@ -278,7 +266,7 @@ async function handleSearch() {
   }
 }
 
-// ইনপুটে 'Enter' চাপলেও যেন সার্চ হয় তার জন্য এই কোড:
+
 document
   .getElementById("search-input")
   .addEventListener("keypress", function (e) {
