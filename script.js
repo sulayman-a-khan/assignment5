@@ -158,10 +158,10 @@ async function showDetails(id) {
 
             <div class="flex gap-2 mb-8">
                 <span class="flex items-center gap-1 border border-red-200 text-red-500 bg-red-50 px-3 py-1 rounded-full text-xs font-bold">
-                    🐞 BUG
+                    BUG
                 </span>
                 <span class="flex items-center gap-1 border border-orange-200 text-orange-500 bg-orange-50 px-3 py-1 rounded-full text-xs font-bold">
-                    ⚙️ HELP WANTED
+                    HELP WANTED
                 </span>
             </div>
 
