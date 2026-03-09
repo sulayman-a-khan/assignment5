@@ -3,14 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <!-- daisy and tailwind cdn  -->
-   <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-</head>
-
-  <body>
+    <title>Github Issue Tracker</title>
     
+    <!-- daisy and tailwind cdn  -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+
+  <body class="sm: px-3">
     <!-- navbar -->
     <nav class="bg-gray-100 px-[80px] py-[16px] border-b flex justify-between">
       <!-- Left side Logo -->
@@ -20,16 +24,18 @@
       </div>
 
       <!-- Right side Search bar -->
-      <div class="flex items-center space-x-2">
+      <div
+        class="flex flex-col sm:flex-row sm:items-center gap-2"
+      >
         <input
           id="search-input"
           type="text"
           placeholder="🔍 Search issues..."
-          class="border border-gray-300 rounded-l-md px-3 py-2"
+          class="border border-gray-300 rounded-md sm:rounded-l-md px-3 py-2 flex-1 w-full"
         />
+        <!-- Right side buttons -->
         <button
-          onclick="handleSearch()"
-          class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full sm:w-auto"
         >
           + New Issue
         </button>
@@ -38,48 +44,73 @@
 
     <!-- ------------------------------------------------------------------------ -->
     <!-- tabs button start here -->
-      <main class="max-w-[1110px] mx-auto pb-10">
-    <div id="tabs" class="p-4 space-x-2 mt-[60px] shadow-sm border rounded-t-lg bg-white">
-        <button onclick="filterIssues('all')" class="tab-btn btn btn-primary px-8">All</button>
-        <button onclick="filterIssues('open')" class="tab-btn btn btn-ghost px-8">Open</button>
-        <button onclick="filterIssues('closed')" class="tab-btn btn btn-ghost px-8">Closed</button>
-    </div>
+    <main class="max-w-[1110px] mx-auto pb-10">
+      <div
+        id="tabs"
+        class="p-6 my-3 space-x-2 mt-[60px] shadow-lg border-t-2 rounded-lg bg-white"
+      >
+        <button
+          onclick="filterIssues('all')"
+          class="tab-btn btn btn-primary px-8"
+        >
+          All
+        </button>
+        <button
+          onclick="filterIssues('open')"
+          class="tab-btn btn btn-ghost px-8"
+        >
+          Open
+        </button>
+        <button
+          onclick="filterIssues('closed')"
+          class="tab-btn btn btn-ghost px-8"
+        >
+          Closed
+        </button>
+      </div>
 
-    <div class="p-6 border-x border-b shadow-sm flex justify-between items-center bg-white">
+      <div
+        class="p-6 border-t-2 rounded shadow-lg flex justify-between items-center bg-white"
+      >
         <div class="flex gap-3 items-center">
-            <img src="https://img.icons8.com/ios-filled/50/7950f2/aperture.png" class="w-8 h-8" alt="icon">
-            <div>
-                <h1 id="issue-count" class="font-bold text-lg">0 Issues</h1>
-                <p class="text-gray-500 text-sm">Track and manage your project issues</p>
-            </div>
+          <img
+            src="https://img.icons8.com/ios-filled/50/7950f2/aperture.png"
+            class="w-8 h-8"
+            alt="icon"
+          />
+          <div>
+            <h1 id="issue-count" class="font-bold text-lg">0 Issues</h1>
+            <p class="text-gray-500 text-sm">
+              Track and manage your project issues
+            </p>
+          </div>
         </div>
         <div class="flex gap-4 font-medium text-sm">
-            <p>🟢 Open</p>
+          <p>🟢 Open</p>
           <p>🟣 Closed</p>
         </div>
-    </div>
+      </div>
 
-    <div id="loader" class="flex justify-center my-20" style="display: none;">
+      <div id="loader" class="flex justify-center my-20" style="display: none">
         <span class="loading loading-spinner loading-lg text-primary"></span>
-    </div>
+      </div>
 
-    <div id="issue-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
-        </div>
+      <div
+        id="issue-container"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6"
+      ></div>
 
-    <dialog id="issue_modal" class="modal">
+      <dialog id="issue_modal" class="modal">
         <div class="modal-box w-11/12 max-w-2xl">
-            <div id="modal-content"></div>
-            <div class="modal-action">
-                <form method="dialog">
-                    <button class="btn btn-primary">Close</button>
-                </form>
-            </div>
+          <div id="modal-content"></div>
+          <div class="modal-action">
+            <form method="dialog">
+              <button class="btn btn-primary">Close</button>
+            </form>
+          </div>
         </div>
-    </dialog>
-</main>
-
-
-
+      </dialog>
+    </main>
 
     <script src="script.js"></script>
   </body>

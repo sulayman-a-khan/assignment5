@@ -91,10 +91,32 @@ function displayIssues(issues) {
                 ${issue.description || "No description available."}
             </p>
 
-            <div class="flex gap-2 mb-4">
-                <span class="text-[9px] font-bold bg-red-100 text-red-500 px-2 py-1 rounded-full">${issue.category || "BUG"}</span>
-                <span class="text-[9px] font-bold bg-yellow-100 text-yellow-600 px-2 py-1 rounded-full">HELP WANTED</span>
-            </div>
+          
+
+
+            
+
+            <div class="flex gap-2 mb-4"> 
+  ${issue.labels
+    .map((label) => {
+      let colorClass = "bg-gray-100 text-gray-700"; // default color
+
+      if (label.toLowerCase() === "bug") {
+        colorClass = "bg-red-100 text-red-500";
+      } else if (label.toLowerCase() === "help wanted") {
+        colorClass = "bg-yellow-100 text-yellow-600";
+      } else if (label.toLowerCase() === "enhancement") {
+        colorClass = "bg-green-100 text-green-600";
+      } else if (label.toLowerCase() === "documentation") {
+        colorClass = "bg-blue-100 text-blue-600";
+      } else if (label.toLowerCase() === "good first issue") {
+        colorClass = "bg-purple-100 text-purple-600";
+      }
+
+      return `<span class="text-[9px] font-bold ${colorClass} px-2 py-1 rounded-full">${label.toUpperCase()}</span>`;
+    })
+    .join("")}
+</div>
 
             <div class="border-t pt-3 text-[10px] text-gray-400 flex justify-between">
                 <span>#${issue.id} by ${issue.author || "User"}</span>
