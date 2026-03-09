@@ -151,13 +151,8 @@ async function showDetails(id) {
     content.innerHTML = `
             <h1 class="text-3xl font-bold text-gray-800 mb-4">${data.title}</h1>
 
-            <div class="flex items-center gap-2 mb-6 text-gray-500 text-sm">
-                <span class="badge ${data.status === "open" ? "badge-success" : "badge-secondary"} text-white px-4 py-3">
-                    ${data.status === "open" ? "Opened" : "Closed"}
-                </span>
-                <span>•</span>
+            <div class="flex items-center gap-2 mb-6 text-gray-500 text-sm">                  
                 <span>Opened by <strong>${data.author}</strong></span>
-                <span>•</span>
                 <span>${new Date(data.createdAt).toLocaleDateString("en-GB")}</span>
             </div>
 
